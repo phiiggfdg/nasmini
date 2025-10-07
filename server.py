@@ -812,20 +812,3 @@ async def require_auth_mw(request: Request, call_next):
 @app.get("/api/lan")
 async def api_lan():
     return {"host": lan_ip(), "url": f"{get_base_url()}/"}
-
-# -------------------------
-# ======= MAIN =============
-# -------------------------
-if __name__ == "__main__":
-    host = lan_ip()
-    port = int(os.environ.get("PORT", "8000"))
-    url = f"http://{host}:{port}/"
-    print("====================================================")
-    print(" NAS Mini • Local file transfer (like MEGA in LAN) ")
-    print("----------------------------------------------------")
-    print(" Open this on your phone/PC in same Wi-Fi:")
-    print(f"   {url}")
-    print(" (Nếu không vào được, dùng 127.0.0.1 từ máy chủ)")
-    print("====================================================")
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=port)
