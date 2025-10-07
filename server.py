@@ -24,9 +24,13 @@ QR_EXP_SEC = 120     # QR token expiry: 2 minutes
 DB_PATH = "nas_mini.db"
 DATA_ROOT = "data"   # per-user folders: data/<username>
 
+# --- Tạo thư mục và DB nếu chưa có ---
 os.makedirs(DATA_ROOT, exist_ok=True)
+if not os.path.exists(DB_PATH):
+    open(DB_PATH, "w").close()
 
 app = FastAPI(title="NAS Mini (Local)")
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"], allow_credentials=True,
@@ -812,3 +816,4 @@ async def require_auth_mw(request: Request, call_next):
 @app.get("/api/lan")
 async def api_lan():
     return {"host": lan_ip(), "url": f"{get_base_url()}/"}
+
